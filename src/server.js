@@ -8,12 +8,12 @@ app.get('/', function (req, reply) {
 
 
 app.get('/ping', function (req, reply) {
-    console.log("asdasd");
     reply.send({});
 });
 
 
-app.get('/rt-values', function (req, reply) {
+app.post('/rt-values', function (req, reply) {
+    console.log(req.body);
     reply.send({});
 });
 
@@ -27,7 +27,4 @@ app.listen(8000, (err, address) => {
         app.log.error(err);
         process.exit(1);
     }
-    app.log.info('');
 });
-
-console.log("TEST");
