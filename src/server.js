@@ -1,30 +1,51 @@
 const fastify = require('fastify');
+const Application = require('./Application');
 
-const app = fastify({logger: true});
-
-app.get('/', function (req, reply) {
-    reply.send({hello: 'world'});
-});
+let application = Application.getInstance();
+let server = fastify({logger: true});
 
 
-app.get('/ping', function (req, reply) {
-    reply.send({});
-});
+
+load();
+start();
 
 
-app.post('/rt-values', function (req, reply) {
-    console.log(req.body);
-    reply.send({});
-});
+
+function load () {
+    application.load();
+}
 
 
-app.get('/rt-alerts', function (req, reply) {
-    reply.send({});
-});
+function start () {
+    startServer();
+}
 
-app.listen(8000, (err, address) => {
-    if (err) {
-        app.log.error(err);
-        process.exit(1);
-    }
-});
+
+function startServer () {
+    server.get('/', function (req, reply) {
+        reply.send({hello: 'world'});
+    });
+
+
+    server.get('/ping', function (req, reply) {
+        reply.send({});
+    });
+
+
+    server.post('/rt-values', function (req, reply) {
+        console.log(req.body);
+        reply.send({});
+    });
+
+
+    server.get('/rt-alerts', function (req, reply) {
+        reply.send({});
+    });
+
+    server.listen(8000, (err, address) => {
+        if (err) {
+            server.log.error(err);
+            process.exit(1);
+        }
+    });
+}

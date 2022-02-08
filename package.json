@@ -9,6 +9,6 @@
     "fastify-redis": "^4.3.3"
   },
   "scripts": {
-    "start": "node ./src/server.js"
+    "start": "node ./src/Server.js"
   }
 }
