@@ -13,7 +13,7 @@ class Application {
 
 
     load () {
-        globalStorage.industrialEquipment.load();
+        globalStorage.industrialEquipment.load('./src/IndustrialEquipment.json');
     }
 }
 
