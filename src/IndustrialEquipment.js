@@ -11,15 +11,13 @@ class IndustrialEquipment {
         try {
             let rawdata = fs.readFileSync(fileName);
             let parsedData = JSON.parse(rawdata);
-            let equipment = parsedData.equipment;
-            equipment.forEach(itemData => {
+            parsedData.equipment.forEach(itemData => {
                 let newItem = {
                     userId: itemData.userId,
                     userIp: itemData.userIp,
                     readOnly: itemData.readOnly,
                     equipmentId: itemData.equipmentId
                 };
-                console.log(newItem);
                 if (newItem.userId && newItem.equipmentId) {
                     this.add(newItem);
                 }
@@ -45,6 +43,7 @@ class IndustrialEquipment {
     byIndex (index) {
         return this.itemsByIndex[index];
     }
+
 
     byId (id) {
         return this.itemsById[id];

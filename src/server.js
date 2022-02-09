@@ -3,6 +3,7 @@
 const fastify = require('fastify');
 const Application = require('./Application');
 
+
 let application = Application.getInstance();
 let server = fastify({logger: true});
 

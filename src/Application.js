@@ -1,6 +1,7 @@
 const Constants = require('./Constants');
 const GlobalStorage = require('./GlobalStorage');
 const IndustrialEquipment = require('./IndustrialEquipment');
+const Config = require('./Config');
 
 let instance;
 
@@ -13,7 +14,16 @@ class Application {
 
 
     load () {
-        globalStorage.industrialEquipment.load('./src/IndustrialEquipment.json');
+        let loadConfig = function () {
+        };
+
+        let loadIndustrialEquipment = function () {
+            globalStorage.industrialEquipment.load(Constants.industrialEquipmentFileName);
+        };
+
+
+        loadConfig();
+        loadIndustrialEquipment();
     }
 }
 
