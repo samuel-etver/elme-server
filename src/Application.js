@@ -15,6 +15,8 @@ class Application {
 
     load () {
         let loadConfig = function () {
+            let cfg = new Config();
+            cfg.load(Constants.configFileName);
         };
 
         let loadIndustrialEquipment = function () {
