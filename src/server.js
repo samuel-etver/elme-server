@@ -1,11 +1,13 @@
 'use strict';
 
+const GlobalStorage = require('./GlobalStorage');
 const fastify = require('fastify');
 const Application = require('./Application');
-
+const Constants = require('./Constants');
 
 let application = Application.getInstance();
 let server = fastify({logger: true});
+let globalStorage = GlobalStorage.getInstance();
 
 
 
@@ -29,23 +31,11 @@ function startServer () {
         reply.send({hello: 'world'});
     });
 
+    server.register(require('./routes/v1/PingRoute'),      {prefix: Constants.prefixV1});
+    server.register(require('./routes/v1/RtValuesRoute'),  {prefix: Constants.prefixV1});
+    server.register(require('./routes/v1/RtAlertsRoute'),  {prefix: Constants.prefixV1});
 
-    server.get('/ping', function (req, reply) {
-        reply.send({});
-    });
-
-
-    server.post('/rt-values', function (req, reply) {
-        console.log(req.body);
-        reply.send({});
-    });
-
-
-    server.get('/rt-alerts', function (req, reply) {
-        reply.send({});
-    });
-
-    server.listen(8000, (err, address) => {
+    server.listen(globalStorage.config.serverPort, (err, address) => {
         if (err) {
             server.log.error(err);
             process.exit(1);

@@ -17,6 +17,7 @@ class Application {
         let loadConfig = function () {
             let cfg = new Config();
             cfg.load(Constants.configFileName);
+            globalStorage.config.serverPort = cfg.get('serverPort', Constants.serverPortDef);
         };
 
         let loadIndustrialEquipment = function () {
