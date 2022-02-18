@@ -6,6 +6,7 @@ function onGetRtValues (req, reply) {
 
 
 function onPutRtValues (req, reply) {
+    console.log(req.body.toString());
     reply.code(200);
 }
 
