@@ -1,12 +1,41 @@
+const RequestChecker = require('./RequestChecker');
+const RtValuesRouteEquipmentId1 = require('./RtValuesRouteEquipmentId1');
+const GlobalStorage = require('./../../GlobalStorage');
 const redis = require('redis');
 
-function onGetRtValues (req, reply) {
-    reply.send('get-rt-values');
+let checkRequest = RequestChecker.check;
+let globalStorage = GlobalStorage.getInstance();
+
+let onGetRtValuesHandlers = {
+    '1': RtValuesRouteEquipmentId1.onGetRtValues,
+};
+let onPutRtValuesHandlers = {
+    '1': RtValuesRouteEquipmentId1.onPutRtValues,
 };
 
 
+function onGetRtValues (req, reply) {
+    if (!checkRequest(req)) {
+        reply.send('get-rt-values');
+        return;
+    }
+
+    let appId = req.body.appId;
+    let equipmentId = globalStorage.industrialEquipment.getByAppId(appId).equipmentId;
+    onGetRtValuesHandlers[equipmentId](req, reply);
+    reply.send('get-rt-values');
+}
+
+
 function onPutRtValues (req, reply) {
-    console.log(req.body.toString());
+    if (!checkRequest(req)) {
+        reply.code(401);
+        return;
+    }
+
+    let appId = req.body.appId;
+    let equipmentId = globalStorage.industrialEquipment.getByAppId(appId).equipmentId;
+    onPutRtValuesHandlers[equipmentId](req, reply);
     reply.code(200);
 }
 

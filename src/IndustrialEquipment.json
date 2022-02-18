@@ -1,7 +1,7 @@
 {
     "equipment": [
         {
-            "userId": "794D66AB-D85B-4CD5-9FFF-F8763D9FDC39",
+            "appId": "794D66AB-D85B-4CD5-9FFF-F8763D9FDC39",
             "userIp": "127.0.0.1",
             "readOnly": "false",
             "equipmentId": "1"

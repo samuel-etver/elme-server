@@ -2,8 +2,8 @@ const fs = require('fs');
 
 class IndustrialEquipment {
     constructor () {
-        this.itemsByIndex = [];
-        this.itemsById    = {};
+        this.itemsByIndex  = [];
+        this.itemsByAppId = {};
     }
 
 
@@ -13,12 +13,12 @@ class IndustrialEquipment {
             let parsedData = JSON.parse(rawdata);
             parsedData.equipment.forEach(itemData => {
                 let newItem = {
-                    userId: itemData.userId,
+                    appId: itemData.appId,
                     userIp: itemData.userIp,
-                    readOnly: itemData.readOnly,
+                    readOnly: itemData.readOnly.toLowerCase === 'false',
                     equipmentId: itemData.equipmentId
                 };
-                if (newItem.userId && newItem.equipmentId) {
+                if (newItem.appId && newItem.equipmentId) {
                     this.add(newItem);
                 }
             });
@@ -31,7 +31,7 @@ class IndustrialEquipment {
 
     add (newItem) {
         this.itemsByIndex.push(newItem);
-        this.itemsById[newItem.userId] = newItem;
+        this.itemsByAppId[newItem.appId] = newItem;
     }
 
 
@@ -40,13 +40,13 @@ class IndustrialEquipment {
     }
 
 
-    byIndex (index) {
+    getByIndex (index) {
         return this.itemsByIndex[index];
     }
 
 
-    byId (id) {
-        return this.itemsById[id];
+    getByAppId (id) {
+        return this.itemsByAppId[id];
     }
 }
 

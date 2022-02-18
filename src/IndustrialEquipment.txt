@@ -2,7 +2,7 @@ JSON-file format (field with default value).
 If field is omitted, it has default value.
 
 {
-    "userId": "",
+    "appId": "",
     "userIp": "",
     "readOnly": "true",
     "equipmentId": ""
