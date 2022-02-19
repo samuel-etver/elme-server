@@ -1,7 +1,6 @@
 const RequestChecker = require('./RequestChecker');
 const RtValuesRouteEquipmentId1 = require('./RtValuesRouteEquipmentId1');
 const GlobalStorage = require('./../../GlobalStorage');
-const redis = require('redis');
 
 let checkRequest = RequestChecker.check;
 let globalStorage = GlobalStorage.getInstance();

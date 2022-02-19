@@ -2,6 +2,8 @@ const Constants = require('./Constants');
 const GlobalStorage = require('./GlobalStorage');
 const IndustrialEquipment = require('./IndustrialEquipment');
 const Config = require('./Config');
+const RtDb = require('./RtDb');
+
 
 let instance;
 
