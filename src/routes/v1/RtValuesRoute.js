@@ -21,7 +21,7 @@ function onGetRtValues (req, reply) {
 
     let appId = req.body.appId;
     let equipmentId = globalStorage.industrialEquipment.getByAppId(appId).equipmentId;
-    onGetRtValuesHandlers[equipmentId](req, reply);
+    onGetRtValuesHandlers[equipmentId](req, reply, equipmentId);
     reply.send('get-rt-values');
 }
 
@@ -34,7 +34,7 @@ function onPutRtValues (req, reply) {
 
     let appId = req.body.appId;
     let equipmentId = globalStorage.industrialEquipment.getByAppId(appId).equipmentId;
-    onPutRtValuesHandlers[equipmentId](req, reply);
+    onPutRtValuesHandlers[equipmentId](req, reply, equipmentId);
     reply.code(200);
 }
 

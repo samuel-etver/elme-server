@@ -12,6 +12,7 @@ let globalStorage = GlobalStorage.getInstance();
 class Application {
     constructor () {
         globalStorage.industrialEquipment = new IndustrialEquipment();
+        globalStorage.rtDb = new RtDb();
     }
 
 
