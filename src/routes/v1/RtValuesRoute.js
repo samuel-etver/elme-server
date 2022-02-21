@@ -26,7 +26,7 @@ function onGetRtValues (req, reply) {
 }
 
 
-function onPutRtValues (req, reply) {
+async function onPutRtValues (req, reply) {
     if (!checkRequest(req)) {
         reply.code(401);
         return;
@@ -34,8 +34,14 @@ function onPutRtValues (req, reply) {
 
     let appId = req.body.appId;
     let equipmentId = globalStorage.industrialEquipment.getByAppId(appId).equipmentId;
-    onPutRtValuesHandlers[equipmentId](req, reply, equipmentId);
-    reply.code(200);
+    let code = 500;
+    try {
+        await onPutRtValuesHandlers[equipmentId](req, reply, equipmentId);
+        code = 200;
+    }
+    catch (e) {
+    }
+    return async () => reply.code(code);
 }
 
 

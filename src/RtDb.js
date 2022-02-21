@@ -11,6 +11,7 @@ class RtDb {
                 this.mongoClient.close();
             }
             else {
+                this.pingCollection = connection.db().collection('ping');
                 this.rtValuesCollection = connection.db().collection('rtValues');
                 this.opened = true;
             }
@@ -18,7 +19,41 @@ class RtDb {
     }
 
 
-    writeRtValues (equipmentId, rtValues) {
+    async writePing (equipmentId) {
+        if (!this.opened) {
+            return;
+        }
+
+        let query = {
+            equipmentId: equipmentId
+        };
+        let newData = {
+            $set: {
+                equipmentId: equipmentId,
+                ping: {
+                    date: Date.now()
+                }
+            }
+        };
+        let options = {
+            upsert: true
+        };
+
+        await this.pingCollection.updateOne(query, newData, options);
+    }
+
+
+    readPing (equipmentId) {
+        if (this.opened) {
+            let query = {
+                equipmentId: equipmentId
+            };
+            return this.pingCollection.findOne(query);
+        }
+    }
+
+
+    async writeRtValues (equipmentId, rtValues) {
         if (!this.opened) {
             return;
         }
@@ -36,12 +71,17 @@ class RtDb {
             upsert: true
         };
 
-        this.rtValuesCollection.updateOne(query, newData, options);
+        await this.rtValuesCollection.updateOne(query, newData, options);
     }
 
 
     readRtValues (equipmentId) {
-
+        if (this.opened) {
+            let query = {
+                equipmentId: equipmentId
+            };
+            return this.rtValuesCollection.findOne(query);
+        }
     }
 };
 
