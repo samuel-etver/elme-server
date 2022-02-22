@@ -1,5 +1,19 @@
 const MongoDb = require('mongodb');
 const MongoClient = MongoDb.MongoClient;
+const MariaDB = require('mariadb');
+
+
+class RtDbException {
+    constructor (message) {
+        this.message = message;
+    }
+}
+
+
+function throwNotOpenedException () {
+    throw new RtDbException("RtDb is not opened");
+}
+
 
 class RtDb {
     constructor () {
@@ -11,18 +25,25 @@ class RtDb {
                 this.mongoClient.close();
             }
             else {
-                this.pingCollection = connection.db().collection('ping');
-                this.rtValuesCollection = connection.db().collection('rtValues');
+                let db = connection.db();
+                this.pingCollection = db.collection('ping');
+                this.rtValuesCollection = db.collection('rtValues');
+                this.alertsCollection = db.collection('alerts');
                 this.opened = true;
             }
         });
     }
 
 
-    async writePing (equipmentId) {
+    checkedOpened () {
         if (!this.opened) {
-            return;
+            throwNotOpenedException();
         }
+    }
+
+
+    async writePing (equipmentId) {
+        this.checkedOpened();
 
         let query = {
             equipmentId: equipmentId
@@ -54,9 +75,7 @@ class RtDb {
 
 
     async writeRtValues (equipmentId, rtValues) {
-        if (!this.opened) {
-            return;
-        }
+        this.checkedOpened();
 
         let query = {
             equipmentId: equipmentId

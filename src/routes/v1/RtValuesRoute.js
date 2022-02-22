@@ -40,6 +40,7 @@ async function onPutRtValues (req, reply) {
         code = 200;
     }
     catch (e) {
+        //console.log(e);
     }
     return async () => reply.code(code);
 }

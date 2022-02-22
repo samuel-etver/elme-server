@@ -1,5 +1,3 @@
-'use strict';
-
 const GlobalStorage = require('./GlobalStorage');
 const fastify = require('fastify');
 const Application = require('./Application');

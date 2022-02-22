@@ -6,6 +6,7 @@
   "license": "CC0-1.0",
   "dependencies": {
     "fastify": "^3.27.0",
+    "mariadb": "^2.5.6",
     "mongodb": "^4.4.0"
   },
   "scripts": {
