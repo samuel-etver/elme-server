@@ -1,6 +1,5 @@
 const MongoDb = require('mongodb');
 const MongoClient = MongoDb.MongoClient;
-const MariaDB = require('mariadb');
 
 
 class RtDbException {
